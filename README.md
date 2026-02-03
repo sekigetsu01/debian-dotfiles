@@ -1,4 +1,4 @@
-# Setup for my Debian VM.
+# Setup for my Debian VM
 
 ## Allow sudo
 ```
@@ -9,7 +9,7 @@ su root
 sudo usermod -aG sudo user
 ```
 
-## Set path to .local/bin
+## Set path to $HOME/.local/bin
 ```
 export PATH=$PATH:/home/user/.local/bin
 ```
