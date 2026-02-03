@@ -1,0 +1,83 @@
+# Basic Settings
+#set previewer ~/scripts/lf/preview
+set preview true
+set hidden true
+set drawbox true
+set icons true
+set ignorecase true
+
+# Custom Functions
+cmd open ${{
+    case $(file --mime-type "$f" -bL) in
+        text/*|application/json) nvim "$f";;
+        application/x-executable) "$f";;
+        *) gio open "$f" ;;
+    esac
+}}
+
+cmd mkdir ${{
+  printf "Directory Name: "
+  read ans
+  mkdir $ans
+}}
+
+cmd mkfile ${{
+  printf "File Name: "
+  read ans
+  nvim $ans
+}}
+
+cmd chmod ${{
+  printf "Mode Bits: "
+  read ans
+
+  for file in "$fx"
+  do
+    chmod $ans $file
+  done
+
+  lf -remote 'send reload'
+}}
+
+cmd sudomkfile ${{
+  printf "File Name: "
+  read ans
+  sudo nvim $ans
+}}
+
+cmd open_config  ${{
+  nvim $(bookmenu -b ~/.config/bookmenu/configs -f fzf -o)
+}}
+
+# Bindings
+# Remove some defaults
+
+# File Openers
+map ee $nvim "$f"
+
+# Basic Functions
+map . set hidden!
+map D delete
+map m mkdir
+map p paste
+map d cut
+map y copy
+map <enter> open
+map br $vimv $fx
+
+map A :rename; cmd-end # at the very end
+map I :rename; cmd-home # at the very beginning
+map i :rename # before extension
+map a :rename; cmd-right # after extension
+
+map g top
+map G bottom
+map R reload
+map C clear
+map U unselect
+
+
+# Movement
+map P cd ~/Pictures
+map u cd ~/unsafe-pdfs
+map o cd ~/cleaned-pdfs
